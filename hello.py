@@ -17,7 +17,7 @@ def result():
     if request.method == 'GET':
         name = request.args.get("name")
         data = search(name)
-        return render_template("result.html", data=data)
+        return render_template("result.html", data=data, name=name)
 
 @app.route("/show", methods = ['GET'])
 def show():
