@@ -64,18 +64,18 @@
       <div class="container">
         <div class="row">
           {% for entry in data %}
-          <div class="col-md">
-            <p></p>
-            <img class="img-fluid" src="{{entry.poster}}" />
-            <p></p>
-            <h3>
-              <a href="./show?id={{entry.entry_id}}">{{entry.title}} ({{entry.release_year}})</a>
-            </h3>
-            <p>{{entry.short_description}}</p>
-            <a href="{{entry.url}}">JustWatch</a>
-            <p></p>
-            <hr />
-          </div>
+            <div class="col-md">
+              <p></p>
+              <img class="img-fluid" src="{{entry.poster}}" />
+              <p></p>
+              <h3>
+                <a href="./show?id={{entry.entry_id}}">{{entry.title}} ({{entry.release_year}})</a>
+              </h3>
+              <p>{{entry.short_description}}</p>
+              <a href="{{entry.url}}">JustWatch</a>
+              <p></p>
+              <hr />
+            </div>
           {% endfor %}
         </div>
       </div>
