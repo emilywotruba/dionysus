@@ -17,27 +17,52 @@
       crossorigin="anonymous"
     ></script>
   </head>
-  <body>
-    <form
-      action="./result"
-      method="GET"
-      class="d-flex flex-column min-vh-100 justify-content-center align-items-center"
-      style="padding:10px"
+  <body class="d-flex" style="height: 100vh;">
+    <div
+      class="container"
+      style="max-width: 500px; margin-bottom: auto; margin-top: auto;"
     >
-      <h1 style="margin:60px;text-align:center;">Global Streaming Search</h1>
-      <div class="input-group" style="max-width:500px">
-        <input
-          name="name"
-          type="search"
-          class="form-control"
-          placeholder="Search"
-          aria-label="Search"
-          aria-describedby="search-addon"
-        />
-        <button type="submit" class="btn btn-primary" data-mdb-ripple-init>
-          search
-        </button>
+      <div class="row text-center">
+        <div class="col">
+          <img
+            src="https://github.com/emilywotruba/dionysus/blob/main/logo.png?raw=true"
+            style="width: 50%; max-width: 200px;"
+          />
+        </div>
       </div>
-    </form>
+      <div class="row text-center">
+        <div class="col">
+          <h1>Global Streaming Search</h1>
+        </div>
+      </div>
+      <div class="row text-center">
+        <div class="col">
+          <form
+            action="./result"
+            method="GET"
+            class="d-flex align-items-center"
+            style="padding: 10px;"
+          >
+            <div class="input-group">
+              <input
+                name="name"
+                type="search"
+                class="form-control"
+                placeholder="Search"
+                aria-label="Search"
+                aria-describedby="search-addon"
+              />
+              <button
+                type="submit"
+                class="btn btn-primary"
+                data-mdb-ripple-init
+              >
+                Search
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
