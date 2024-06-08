@@ -1,7 +1,8 @@
 from flask import (
     Flask,
     render_template,
-    request
+    request,
+    jsonify
 )
 from simplejustwatchapi.justwatch import (
     search,
@@ -78,6 +79,10 @@ def show():
             providers_known=providers_known, 
             providers_unknown=providers_unknown,
             name=details(id).title)
+
+@app.route("/api", methods=['GET'])
+def api():
+    return jsonify({})
 
 if __name__ == "__main__":
     with open("config.yaml", "r") as f:
