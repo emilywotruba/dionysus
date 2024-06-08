@@ -9,11 +9,14 @@ python3.11 hello.py
 ```
 #### Docker:
 ```bash
-sudo docker build -t dionysus .
-docker run -p 5000:5000 dionysus
+docker run -p 5000:5000 ghcr.io/emilywotruba/dionysus:main
 ```
 #### Docker-Compose:
 ```bash
-sudo docker build -t dionysus .
 docker-compose up -d
+```
+
+## Build
+```bash
+sudo docker build -t dionysus .
 ```
