@@ -60,6 +60,16 @@
         </form>
       </div>
     </nav>
+    {% for i in [0,1] %}
+    {% if i == 0 %}
+      {% set data = providers_known %}
+      <br/>
+      <h1>My Providers</h1>
+    {% elif i == 1 %}
+      {% set data = providers_unknown %}
+      <br/>
+      <h1>Others</h1>
+    {% endif %}
     <div class="accordion" id="accordion">
       {% for key in data %}
       {% set entry=data[key] %}
@@ -110,5 +120,6 @@
       </div>
       {% endfor %}
     </div>
+    {% endfor %}
   </body>
 </html>

@@ -5,12 +5,14 @@ from simplejustwatchapi.justwatch import search
 from simplejustwatchapi.justwatch import details
 from simplejustwatchapi.justwatch import offers_for_countries
 import pycountry
+import yaml
 
 app = Flask(__name__)
 
 @app.route("/")
 def hello():
     data = search("house")
+
     return render_template("index.html", data=data)
 
 @app.route("/result", methods = ['GET'])
@@ -18,32 +20,37 @@ def result():
     if request.method == 'GET':
         name = request.args.get("name")
         data = search(name)
+
         return render_template("result.html", data=data, name=name)
 
 @app.route("/show", methods = ['GET'])
 def show():
     if request.method == 'GET':
-        countries = set()
-        for country in pycountry.countries:
-            countries.add(country.alpha_2)
         id = request.args.get("id")
-        data = offers_for_countries(id, countries=countries)
-        out = {}
-        for country in countries:
+
+        data = offers_for_countries(id, countries=country_codes)
+
+        providers_known = {}
+        providers_unknown = {}
+
+        for country in country_codes:
             ctr = pycountry.countries.get(alpha_2=country)
+
             for offer in data[country]:
                 key = offer.package.technical_name + "_" + offer.monetization_type
-                if key in out:
-                    out[key]["countries"].append({
+                is_my_service = offer.package.technical_name in settings["providers"]
+
+                if key in (providers_known if is_my_service else providers_unknown):
+                    (providers_known if is_my_service else providers_unknown)[key]["countries"].append({
                         "name": ctr.name,
                         "flag": ctr.flag,
                         "price": offer.price_string,
                         "type": offer.type
                     })
                 else:
-                    out[key] = {
+                    (providers_known if is_my_service else providers_unknown)[key] = {
                         "provider_friendly": offer.package.name + " (" + offer.monetization_type + ")",
-                        "provider_id": offer.package.technical_name,
+                        "provider_id": key,
                         "monetization_type": offer.monetization_type,
                         "countries": [{
                             "name": ctr.name,
@@ -54,7 +61,26 @@ def show():
                         "url": offer.url,
                         "icon": offer.package.icon
                     }
-        return render_template("show.html", data=out, name=details(id).title)
+
+        providers_known = dict(sorted(
+            providers_known.items(), 
+            key=lambda item: item[1]["provider_friendly"]))
+        providers_unknown = dict(sorted(
+            providers_unknown.items(),
+            key=lambda item: item[1]["provider_friendly"]))
+        
+        return render_template(
+            "show.html", 
+            providers_known=providers_known, 
+            providers_unknown=providers_unknown,
+            name=details(id).title)
 
 if __name__ == "__main__":
+    with open("config.yaml", "r") as f:
+        settings = yaml.safe_load(f)
+
+    country_codes = set()
+    for country in pycountry.countries:
+        country_codes.add(country.alpha_2)
+
     app.run(debug=True, port=5000, host='0.0.0.0')
