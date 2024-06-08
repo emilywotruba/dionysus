@@ -45,7 +45,13 @@
     {% for key in data %}
     {% set entry=data[key] %}
     <div class="accordion-item">
-      <h2 class="accordion-header" id="heading{{entry.provider_id}}">
+      <h2 
+        class="accordion-header" 
+        id="heading{{entry.provider_id}}" 
+        style="display: flex;">
+        <img 
+          src="{{entry.icon}}"
+          style="height: calc(1.325rem + .9vw + 32px); border-radius: 25%;"/>
         <button
           class="accordion-button collapsed"
           type="button"

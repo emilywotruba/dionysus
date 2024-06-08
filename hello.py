@@ -89,7 +89,8 @@ def show():
                             "price": offer.price_string,
                             "type": offer.type
                         }],
-                        "url": offer.url
+                        "url": offer.url,
+                        "icon": offer.package.icon
                     }
         return render_template("show.html", data=out, name=details(id).title)
 
