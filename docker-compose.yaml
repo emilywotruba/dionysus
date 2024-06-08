@@ -1,0 +1,7 @@
+version: '3.8'
+
+services:
+  dionysus:
+    image: dionysus
+    ports:
+      - "5000:5000/tcp"
