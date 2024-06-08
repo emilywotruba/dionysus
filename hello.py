@@ -1,9 +1,13 @@
-from flask import Flask
-from flask import render_template
-from flask import request
-from simplejustwatchapi.justwatch import search
-from simplejustwatchapi.justwatch import details
-from simplejustwatchapi.justwatch import offers_for_countries
+from flask import (
+    Flask,
+    render_template,
+    request
+)
+from simplejustwatchapi.justwatch import (
+    search,
+    details,
+    offers_for_countries
+)
 import pycountry
 import yaml
 
