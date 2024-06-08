@@ -82,7 +82,12 @@ def show():
 
 @app.route("/api", methods=['GET'])
 def api():
-    return jsonify({})
+    if request.method == 'GET':
+        match request.args.get("action"):
+            case "search":
+                data = [r._asdict() for r in search(request.args.get("name"))]
+    print(data)
+    return jsonify(data)
 
 if __name__ == "__main__":
     with open("config.yaml", "r") as f:
