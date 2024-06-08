@@ -80,7 +80,7 @@ def show():
                     })
                 else:
                     out[key] = {
-                        "provider_friendly": offer.package.name + " " + offer.monetization_type,
+                        "provider_friendly": offer.package.name + " (" + offer.monetization_type + ")",
                         "provider_id": offer.package.technical_name,
                         "monetization_type": offer.monetization_type,
                         "countries": [{
