@@ -2,6 +2,7 @@ from flask import Flask
 from flask import render_template
 from flask import request
 from simplejustwatchapi.justwatch import search
+from simplejustwatchapi.justwatch import details
 from simplejustwatchapi.justwatch import offers_for_countries
 import pycountry
 
@@ -90,7 +91,7 @@ def show():
                         }],
                         "url": offer.url
                     }
-        return render_template("show.html", data=out)
+        return render_template("show.html", data=out, name=details(id).title)
 
 if __name__ == "__main__":
     app.run(debug=True, port=5000, host='0.0.0.0')

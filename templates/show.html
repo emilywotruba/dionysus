@@ -14,6 +14,31 @@
     crossorigin="anonymous"></script>
 </head>
 <body>
+  <nav class="navbar sticky-top bg-primary">
+    <div class="container-fluid">
+      <form
+        class="d-flex"
+        role="search"
+        action="./result"
+        method="GET">
+        <div class="input-group">
+          <input
+            name="name" 
+            type="search"
+            class="form-control" 
+            placeholder="{{name}}"
+            aria-label="Search"
+            aria-describedby="search-addon"/>
+          <button
+            type="submit"
+            class="btn btn-outline-light"
+            data-mdb-ripple-init>
+            Search
+          </button>
+        </div>
+      </form>
+    </div>
+  </nav>
   <div 
     class="accordion"
     id="accordion">
