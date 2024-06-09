@@ -45,24 +45,22 @@ def show():
                 key = offer.package.technical_name + "_" + offer.monetization_type
                 is_my_service = offer.package.technical_name in settings["providers"]
 
+                tmp = {
+                    "name": ctr.name,
+                    "flag": ctr.flag,
+                    "price": offer.price_string,
+                    "type": offer.type,
+                    "elements": offer.element_count
+                }
+
                 if key in (providers_known if is_my_service else providers_unknown):
-                    (providers_known if is_my_service else providers_unknown)[key]["countries"].append({
-                        "name": ctr.name,
-                        "flag": ctr.flag,
-                        "price": offer.price_string,
-                        "type": offer.type
-                    })
+                    (providers_known if is_my_service else providers_unknown)[key]["countries"].append(tmp)
                 else:
                     (providers_known if is_my_service else providers_unknown)[key] = {
                         "provider_friendly": offer.package.name + " (" + offer.monetization_type + ")",
                         "provider_id": key,
                         "monetization_type": offer.monetization_type,
-                        "countries": [{
-                            "name": ctr.name,
-                            "flag": ctr.flag,
-                            "price": offer.price_string,
-                            "type": offer.type
-                        }],
+                        "countries": [tmp],
                         "url": offer.url,
                         "icon": offer.package.icon
                     }

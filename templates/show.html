@@ -106,12 +106,14 @@
                     <th scope="col">Country</th>
                     <th>Price</th>
                     <th>Type</th>
+                    <th>Elements</th>
                   </tr>
                   {% for ctr in entry.countries %}
                   <tr>
                     <td scope="col">{{ctr.flag}} {{ctr.name}}</td>
                     <td>{{ctr.price}}</td>
                     <td>{{ctr.type}}</td>
+                    <td>{{ctr.elements}}</td>
                   </tr>
                   {% endfor %}
                 </table>
