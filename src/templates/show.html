@@ -22,7 +22,7 @@
       <div class="container-fluid">
         <a href="/">
           <img
-            src="https://github.com/emilywotruba/dionysus/blob/main/logo.png?raw=true"
+            src="{{url_for('static', filename='logo.png')}}"
             style="height: 50px;padding-right: calc(var(--bs-gutter-x) * .5);"
           >
         </a>
@@ -60,29 +60,68 @@
         </form>
       </div>
     </nav>
-    <div class="d-flex flex-column min-vh-100 justify-content-center align-items-center">
-      <div class="container">
-        <div class="row">
-          {% for entry in data %}
-            <div class="col-md">
-              <p></p>
-              <img class="img-fluid" src="{{entry.poster}}" />
-              <p></p>
-              <h3>
-                <a href="./show?id={{entry.entry_id}}">{{entry.title}} ({{entry.release_year}})</a>
-              </h3>
-              <p>{{entry.short_description}}</p>
-              <div class="d-flex justify-content-center">
-                <a href="{{entry.url}}">JustWatch</a>
-                &#x2022;
-                <a href="https://www.imdb.com/title/{{entry.imdb_id}}/">IMDB</a>
+    <div class="accordion" id="accordion">
+      {% for i in [0,1] %}
+        {% if i == 0 %}
+          {% set data = providers_known %}
+          <br/>
+          <h1>My Providers</h1>
+        {% elif i == 1 %}
+          {% set data = providers_unknown %}
+          <br/>
+          <h1>Others</h1>
+        {% endif %}
+        {% for key in data %}
+          {% set entry=data[key] %}
+          <div class="accordion-item">
+            <h2
+              class="accordion-header"
+              id="heading{{entry.provider_id}}"
+              style="display: flex;"
+            >
+              <img
+                src="{{entry.icon}}"
+                style="height: calc(1.325rem + .9vw + 32px); border-radius: 25%;"
+              />
+              <button
+                class="accordion-button collapsed"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#collapse{{entry.provider_id}}"
+                aria-expanded="false"
+                aria-controls="collapse{{entry.provider_id}}"
+              >
+                {{entry.provider_friendly}}
+              </button>
+            </h2>
+            <div
+              id="collapse{{entry.provider_id}}"
+              class="accordion-collapse collapse"
+              aria-labelledby="heading{{entry.provider_id}}"
+              data-bs-parent="#accordion"
+            >
+              <div class="accordion-body">
+                <table class="table">
+                  <tr>
+                    <th scope="col">Country</th>
+                    <th>Price</th>
+                    <th>Type</th>
+                    <th>Elements</th>
+                  </tr>
+                  {% for ctr in entry.countries %}
+                  <tr>
+                    <td scope="col">{{ctr.flag}} {{ctr.name}}</td>
+                    <td>{{ctr.price}}</td>
+                    <td>{{ctr.type}}</td>
+                    <td>{{ctr.elements}}</td>
+                  </tr>
+                  {% endfor %}
+                </table>
               </div>
-              <p></p>
-              <hr />
             </div>
-          {% endfor %}
-        </div>
-      </div>
+          </div>
+        {% endfor %}
+      {% endfor %}
     </div>
   </body>
 </html>

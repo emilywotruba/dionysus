@@ -1,5 +1,5 @@
 <p align="center" width="100%">
-    <img width="33%" src="https://github.com/emilywotruba/dionysus/blob/main/logo.png?raw=true">
+    <img width="33%" src="./src/static/logo.png">
 </p>
 
 # Dionysus

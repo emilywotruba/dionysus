@@ -94,7 +94,7 @@ def api_search():
         return jsonify(data)
 
 if __name__ == "__main__":
-    with open("config.yaml", "r") as f:
+    with open("./static/config.yaml", "r") as f:
         settings = yaml.safe_load(f)
 
     country_codes = set()
