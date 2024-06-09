@@ -2,6 +2,6 @@ version: '3.8'
 
 services:
   dionysus:
-    image: ghcr.io/emilywotruba/dionysus:main
+    image: ghcr.io/emilywotruba/dionysus:latest
     ports:
       - "5000:5000/tcp"
