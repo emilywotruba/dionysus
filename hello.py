@@ -16,15 +16,17 @@ app = Flask(__name__)
 
 @app.route("/")
 def hello():
-    data = search("house")
-
-    return render_template("index.html", data=data)
+    return render_template("index.html")
 
 @app.route("/result", methods = ['GET'])
 def result():
     if request.method == 'GET':
         name = request.args.get("name")
-        data = search(name)
+        data = search(
+            name,
+            language=settings["language"],
+            country=settings["country"],
+            count=settings["result_count"])
 
         return render_template("result.html", data=data, name=name)
 
@@ -33,7 +35,7 @@ def show():
     if request.method == 'GET':
         id = request.args.get("id")
 
-        data = offers_for_countries(id, countries=country_codes)
+        data = offers_for_countries(id, countries=country_codes, language=settings["language"])
 
         providers_known = {}
         providers_unknown = {}
