@@ -1,6 +1,12 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <title>Dionysus - {{name}}</title>
+    <link 
+      rel="icon"
+      type="image/x-icon"
+      href="{{url_for('static', filename='logo.ico')}}"
+    >
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
@@ -22,8 +28,8 @@
       <div class="container-fluid">
         <a href="/">
           <img
-            src="{{url_for('static', filename='logo.png')}}"
-            style="height: 50px;padding-right: calc(var(--bs-gutter-x) * .5);"
+            src="{{url_for('static', filename='logo.svg')}}"
+            style="height: 50px; padding-right: calc(var(--bs-gutter-x) * .5); filter: invert(1);"
           >
         </a>
         <form
