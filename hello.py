@@ -80,14 +80,15 @@ def show():
             providers_unknown=providers_unknown,
             name=details(id).title)
 
-@app.route("/api", methods=['GET'])
-def api():
+@app.route("/api/search/", methods=['GET'])
+def api_search():
     if request.method == 'GET':
-        match request.args.get("action"):
-            case "search":
-                data = [r._asdict() for r in search(request.args.get("name"))]
-    print(data)
-    return jsonify(data)
+        name = request.args.get("name") if "name" in request.args else ""
+        country = request.args.get("country") if "country" in request.args else "US"
+
+        data = [r._asdict() for r in search(name, country=country)]
+        
+        return jsonify(data)
 
 if __name__ == "__main__":
     with open("config.yaml", "r") as f:
