@@ -1,8 +1,32 @@
+# comment out providers you don't own, list may be non-exhaustive
 providers:
   - amazon
   - amazonprimevideo
   - amazonprimevideowithads
+  - atomtickets
+  - bbtheatres
+  - catchplay
+  - cineplex
+  - cinepoliscinema
+  - clarovideo
   - disneyplus
+  - entertaintv
+  - fandango
+  - filminplus
+  - flixfling
+  - go3
+  - hungamaplay
+  - itunes
+  - jiocinema
+  - kpn
+  - max
+  - maxdomestore
+  - mediasetplay
+  - mejane
+  - microsoft
+  - movistar
+  - naverstore
+  - neontvnz
   - netflix
   - nowonline
   - nowtv
@@ -30,3 +54,6 @@ providers:
   - wuaki
   - youtube
   - zee5
+country: "US" # Determines only in which conutry the initial search is performed
+language: "en" # Your preferred language
+result_count: 4 # Determines how many results are shown on result page
