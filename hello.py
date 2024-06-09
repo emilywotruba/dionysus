@@ -85,9 +85,12 @@ def api_search():
     if request.method == 'GET':
         name = request.args.get("name") if "name" in request.args else ""
         country = request.args.get("country") if "country" in request.args else "US"
-
-        data = [r._asdict() for r in search(name, country=country)]
         
+        result = search(name, country=country)
+        data = [r._asdict() for r in result]
+        for i in range(1, len(data)):
+            data[i].update({"raw": result[i].__repr__()})
+
         return jsonify(data)
 
 if __name__ == "__main__":
