@@ -5,3 +5,5 @@ services:
     image: ghcr.io/emilywotruba/dionysus:latest
     ports:
       - "5000:5000/tcp"
+    volumes:
+      - "/path/to/config.yaml:/app/static/config.yaml" # if custom config is wanted
