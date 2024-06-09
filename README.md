@@ -9,11 +9,11 @@ Self-hosted web interface that allows users to search for movies and shows acros
 ## Use
 #### Bash:
 ```bash
-python3.11 hello.py
+python3.11 ./src/
 ```
 #### Docker:
 ```bash
-docker run -p 5000:5000 ghcr.io/emilywotruba/dionysus:main
+docker run -p 5000:5000 ghcr.io/emilywotruba/dionysus:latest
 ```
 #### Docker-Compose:
 ```bash
