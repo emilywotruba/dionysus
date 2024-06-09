@@ -72,7 +72,11 @@
                 <a href="./show?id={{entry.entry_id}}">{{entry.title}} ({{entry.release_year}})</a>
               </h3>
               <p>{{entry.short_description}}</p>
-              <a href="{{entry.url}}">JustWatch</a>
+              <div class="d-flex justify-content-center">
+                <a href="{{entry.url}}">JustWatch</a>
+                &#x2022;
+                <a href="https://www.imdb.com/title/{{entry.imdb_id}}/">IMDB</a>
+              </div>
               <p></p>
               <hr />
             </div>
