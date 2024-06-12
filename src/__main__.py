@@ -56,45 +56,42 @@ def show():
                     offer.package.technical_name,
                     offer.monetization_type
                 )
-                is_my_service = offer.package.technical_name in settings["providers"]
 
-                entry = {
-                    "name": ctr.name,
-                    "flag": ctr.flag,
-                    "price": offer.price_string,
-                    "type": offer.type,
-                    "elements": offer.element_count,
-                }
-
-                if key in (providers_known if is_my_service else providers_unknown):
-                    (providers_known if is_my_service else providers_unknown)[key][
-                        "countries"
-                    ].append(entry)
+                if offer.package.technical_name in settings["providers"]:
+                    providers = providers_known
                 else:
-                    (providers_known if is_my_service else providers_unknown)[key] = {
-                        "provider_friendly": "{} ({})".format(
-                            offer.package.name,
-                            offer.monetization_type
-                        ),
-                        "provider_id": key,
-                        "monetization_type": offer.monetization_type,
-                        "countries": [entry],
-                        "url": offer.url,
-                        "icon": offer.package.icon,
-                    }
+                    providers = providers_unknown
 
-        providers_known = dict(
-            sorted(
-                providers_known.items(),
-                key=lambda item: item[1]["provider_friendly"]
+                if key in providers:
+                    providers[key]["countries"].append(create_entry(ctr, offer))
+                else:
+                    providers[key] = dict(
+                        {
+                            "provider_friendly": "{} ({})".format(
+                                offer.package.name, 
+                                offer.monetization_type
+                            ),
+                            "provider_id": key,
+                            "monetization_type": offer.monetization_type,
+                            "countries": [create_entry(ctr, offer)],
+                            "url": offer.url,
+                            "icon": offer.package.icon,
+                        }
+                    )
+
+        for providers in [providers_known, providers_unknown]:
+            providers = dict(
+                sorted(
+                    providers.items(),
+                    key=lambda item: item[1]["provider_friendly"]
+                )
             )
-        )
-        providers_unknown = dict(
-            sorted(
-                providers_unknown.items(),
-                key=lambda item: item[1]["provider_friendly"]
-            )
-        )
+
+            for key in providers:
+                providers[key]["countries"] = sorted(
+                    providers[key]["countries"],
+                    key=lambda item: (-item["elements"], item["name"]),
+                )
 
         return render_template(
             "show.html",
@@ -104,10 +101,22 @@ def show():
         )
 
 
+def create_entry(ctr, offer):
+    return dict(
+        {
+            "name": ctr.name,
+            "flag": ctr.flag,
+            "price": offer.price_string,
+            "type": offer.type,
+            "elements": offer.element_count,
+        }
+    )
+
+
 @app.route("/api/search/", methods=["GET"])
 def api_search():
     if request.method == "GET":
-        name = request.args.get("name", default = "")
+        name = request.args.get("name", default="")
         country = request.args.get("country", default="US")
 
         result = justwatch.search(name, country=country)
