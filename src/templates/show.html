@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Dionysus - {{name}}</title>
+    <title>Dionysus - {{ name }}</title>
     <link 
       rel="icon"
       type="image/x-icon"
-      href="{{url_for('static', filename='logo.ico')}}"
+      href="{{ url_for('static', filename='logo.ico') }}"
     >
     <meta
       name="viewport"
@@ -28,7 +28,7 @@
       <div class="container-fluid">
         <a href="/">
           <img
-            src="{{url_for('static', filename='logo.svg')}}"
+            src="{{ url_for('static', filename='logo.svg') }}"
             style="height: 50px; padding-right: calc(var(--bs-gutter-x) * .5); filter: invert(1);"
           >
         </a>
@@ -44,7 +44,7 @@
               name="name"
               type="search"
               class="form-control"
-              placeholder="{{name}}"
+              placeholder="{{ name }}"
               aria-label="Search"
               aria-describedby="search-addon"
             />
@@ -82,44 +82,50 @@
           <div class="accordion-item">
             <h2
               class="accordion-header"
-              id="heading{{entry.provider_id}}"
+              id="heading{{ entry.provider_id }}"
               style="display: flex;"
             >
               <img
-                src="{{entry.icon}}"
+                src="{{ entry.icon }}"
                 style="height: calc(1.325rem + .9vw + 32px); border-radius: 25%;"
               />
               <button
                 class="accordion-button collapsed"
                 type="button"
                 data-bs-toggle="collapse"
-                data-bs-target="#collapse{{entry.provider_id}}"
+                data-bs-target="#collapse_{{ entry.provider_id }}"
                 aria-expanded="false"
-                aria-controls="collapse{{entry.provider_id}}"
+                aria-controls="collapse_{{ entry.provider_id }}"
               >
-                {{entry.provider_friendly}}
+                {{ entry.provider_friendly }}
               </button>
             </h2>
             <div
-              id="collapse{{entry.provider_id}}"
+              id="collapse_{{ entry.provider_id }}"
               class="accordion-collapse collapse"
-              aria-labelledby="heading{{entry.provider_id}}"
+              aria-labelledby="heading_{{ entry.provider_id }}"
               data-bs-parent="#accordion"
             >
               <div class="accordion-body">
                 <table class="table">
                   <tr>
                     <th scope="col">Country</th>
+                    {% if entry.has_price %}
                     <th>Price</th>
-                    <th>Type</th>
+                    {% endif %}
+                    {% if entry.has_elements %}
                     <th>Elements</th>
+                    {% endif %}
                   </tr>
                   {% for ctr in entry.countries %}
                   <tr>
-                    <td scope="col">{{ctr.flag}} {{ctr.name}}</td>
-                    <td>{{ctr.price}}</td>
-                    <td>{{ctr.type}}</td>
-                    <td>{{ctr.elements}}</td>
+                    <th scope="col">{{ ctr.flag }} {{ ctr.name }}</th>
+                    {% if entry.has_price %}
+                    <td>{{ ctr.price }}</td>
+                    {% endif %}
+                    {% if entry.has_elements %}
+                    <td>{{ ctr.elements }}</td>
+                    {% endif %}
                   </tr>
                   {% endfor %}
                 </table>

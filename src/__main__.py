@@ -95,12 +95,21 @@ def show():
                     providers[key]["countries"],
                     key=lambda item: (-item["elements"], item["name"]),
                 )
+                
+                providers[key]["has_price"] = False
+                providers[key]["has_elements"] = False
+                
+                for ctr in providers[key]["countries"]:
+                    if ctr["price"] != None and ctr["price"] != 0:
+                        providers[key]["has_price"] = True
+                    if ctr["elements"] != None and ctr["elements"] != 0:
+                        providers[key]["has_elements"] = True
 
         return render_template(
             "show.html",
             providers_known=providers_known,
             providers_unknown=providers_unknown,
-            name=justwatch.details(id).title,
+            name=justwatch.details(id).title
         )
 
 
@@ -110,7 +119,7 @@ def create_entry(ctr, offer):
             "name": ctr.name,
             "flag": ctr.flag,
             "price": offer.price_string,
-            "type": offer.type,
+            # "type": offer.type,
             "elements": offer.element_count,
         }
     )
