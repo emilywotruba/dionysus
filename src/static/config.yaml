@@ -1,6 +1,7 @@
 # comment out providers you don't own, list may be non-exhaustive
 providers:
   - amazon
+  - amazonprime
   - amazonprimevideo
   - amazonprimevideowithads
   - atomtickets
