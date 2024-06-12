@@ -20,9 +20,11 @@ def hello():
 def result():
     if request.method == "GET":
         name = request.args.get("name")
+        language = request.args.get("lang", default=settings["language"])
+        
         data = justwatch.search(
             name,
-            language=settings["language"],
+            language=language,
             country=settings["country"],
             count=settings["result_count"],
         )
@@ -38,11 +40,12 @@ def result():
 def show():
     if request.method == "GET":
         id = request.args.get("id")
+        language = request.args.get("lang", default=settings["language"])
 
         data = justwatch.offers_for_countries(
             id,
             countries=country_codes,
-            language=settings["language"]
+            language=language
         )
 
         providers_known = {}
@@ -118,8 +121,13 @@ def api_search():
     if request.method == "GET":
         name = request.args.get("name", default="")
         country = request.args.get("country", default="US")
+        language = request.args.get("lang", default="en")
 
-        result = justwatch.search(name, country=country)
+        result = justwatch.search(
+            name,
+            country=country,
+            language=language
+        )
         data = [r._asdict() for r in result]
         for i in range(1, len(data)):
             data[i].update({"raw": result[i].__repr__()})
