@@ -128,6 +128,7 @@ def api_search():
             country=country,
             language=language
         )
+        
         data = [r._asdict() for r in result]
         for i in range(1, len(data)):
             data[i].update({"raw": result[i].__repr__()})
@@ -139,9 +140,9 @@ if __name__ == "__main__":
     with open("./static/config.yaml", "r") as f:
         settings = yaml.safe_load(f)
 
-    country_codes = set()
-    for country in pycountry.countries:
-        country_codes.add(country.alpha_2)
+    country_codes = set(
+        [country.alpha_2 for country in pycountry.countries]
+    )
 
     app.run(
         debug=True,
