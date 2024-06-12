@@ -58,3 +58,4 @@ providers:
 country: "US" # Determines only in which conutry the initial search is performed
 language: "en" # Your preferred language
 result_count: 4 # Determines how many results are shown on result page
+host: "0.0.0.0"
