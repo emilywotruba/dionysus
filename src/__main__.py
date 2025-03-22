@@ -10,6 +10,10 @@ import yaml
 
 app = Flask(__name__)
 
+default_settings = {
+        "host": "0.0.0.0",
+        "port": "5000"
+    }
 
 @app.route("/")
 def hello():
@@ -146,8 +150,14 @@ def api_search():
 
 
 if __name__ == "__main__":
+    settings = {}
+
+    # load default settings
+    settings.update(default_settings)
+
+    # load settings from config file
     with open("./static/config.yaml", "r") as f:
-        settings = yaml.safe_load(f)
+        settings.update(yaml.safe_load(f))
 
     country_codes = set(
         [country.alpha_2 for country in pycountry.countries]
