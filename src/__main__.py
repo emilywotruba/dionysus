@@ -7,9 +7,14 @@ from flask import (
 from simplejustwatchapi import justwatch
 import pycountry
 import yaml
+import os
 
 app = Flask(__name__)
 
+default_settings = {
+        "host": "0.0.0.0",
+        "port": "5000"
+    }
 
 @app.route("/")
 def hello():
@@ -146,8 +151,20 @@ def api_search():
 
 
 if __name__ == "__main__":
+    settings = {}
+
+    # load default settings
+    settings.update(default_settings)
+
+    # load settings from config file
     with open("./static/config.yaml", "r") as f:
-        settings = yaml.safe_load(f)
+        settings.update(yaml.safe_load(f))
+
+    # override settings by environment variables, if exists
+    if 'DIONYSUS_HOST' in os.environ:
+        settings["host"] = os.environ['DIONYSUS_HOST']
+    if 'DIONYSUS_PORT' in os.environ:
+        settings["port"] = os.environ['DIONYSUS_PORT']
 
     country_codes = set(
         [country.alpha_2 for country in pycountry.countries]
@@ -155,6 +172,6 @@ if __name__ == "__main__":
 
     app.run(
         debug=True,
-        port=5000,
+        port=settings["port"],
         host=settings["host"]
     )
